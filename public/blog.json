@@ -1,0 +1,34 @@
+[
+    {
+        "_id": 1,
+        "title": "PHP",
+        "slug": "HyperText Preprocessor",
+        "blog1": "The PHP Hypertext Preprocessor (PHP) is a programming language that allows web developers to create dynamic content that interacts with databases. PHP is basically used for developing web based software applications. This tutorial helps you to build your base with PHP.",
+        "blog2": "Why to Learn PHP? PHP started out as a small open source project that evolved as more and more people found out how useful it was. Rasmus Lerdorf unleashed the first version of PHP way back in 1994.",
+        "blog3": "PHP is a MUST for students and working professionals to become a great Software Engineer specially when they are working in Web Development Domain."
+    },
+    {
+        "_id": 2,
+        "title": "Node",
+        "slug": "Back-end JavaScript runtime environment",
+        "blog1": "Node.js is an open-source and cross-platform JavaScript runtime environment. It is a popular tool for almost any kind of project!",
+        "blog2": "Node.js runs the V8 JavaScript engine, the core of Google Chrome, outside of the browser. This allows Node.js to be very performant.",
+        "blog3": "A Node.js app runs in a single process, without creating a new thread for every request. Node.js provides a set of asynchronous I/O primitives in its standard library that prevent JavaScript code from blocking and generally, libraries in Node.js are written using non-blocking paradigms, making blocking behavior the exception rather than the norm."
+    },
+    {
+        "_id": 3,
+        "title": "JavaScript",
+        "slug": "Lightweight, interpreted, and just-in-time compiled programming language",
+        "blog1": "JavaScript (JS) is a lightweight, interpreted, or just-in-time compiled programming language with first-class functions. While it is most well-known as the scripting language for Web pages, many non-browser environments also use it, such as Node.js, Apache CouchDB and Adobe Acrobat.",
+        "blog2": "JavaScript is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting object-oriented, imperative, and declarative (e.g. functional programming) styles. Read more about JavaScript.",
+        "blog3": "This section is dedicated to the JavaScript language itself, and not the parts that are specific to Web pages or other host environments. For information about APIs that are specific to Web pages, please see Web APIs and DOM."
+    },
+    {
+        "_id": 4,
+        "title": "Mongodb",
+        "slug": "Build faster.Build smarter.",
+        "blog1": "Documents in MongoDB map directly to objects in your programming language. Modify your schema as your apps grow over time.",
+        "blog2": "Let MongoDB Atlas take care of the infrastructure operations you need for performance at scale, from always-on security to point-in-time recovery.",
+        "blog3": "Leverage application data for full-text search, real-time analytics, rich visualizations and more with a single API and minimal data movement."
+    }
+]
