@@ -1,54 +1,186 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
+
 
 const AddBlog = () => {
-    const handleAdd = event => {
-        event.preventDefault();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const [user] = useAuthState(auth);
+    const name = user?.displayName;
+    const email = user?.email;
+    const imageStorageKey = '4fb1911cd7fea07ca539c23c89d490db';
 
-        const blog = {
-            title: event.target.title.value,
-            slug: event.target.slug.value,
-            blog1: event.target.blog1.value,
-            blog2: event.target.blog2.value,
-            blog3: event.target.blog3.value,
-        }
-        console.log(blog);
-        fetch('http://localhost:5000/blog', {
-            method: "POST",
-            headers: {
-                'content-type': "application/json"
-            },
-            body: JSON.stringify(blog)
+    const onSubmit = async data => {
+        const image = data.image[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
         })
             .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if (data.success) {
-                    // toast(`Successfully blog added.Thank you...`)
-                }
-                else {
-                    // toast.error(`Sorry!!! Your request is failed `)
+            .then(result => {
+                if (result.success) {
+                    const img = result.data.url;
+                    const blog = {
+                        name: name,
+                        user_id: email,
+                        title: data.title,
+                        slug: data.slug,
+                        blog1: data.blog1,
+                        blog2: data.blog2,
+                        blog3: data.blog3,
+                        doc: data.doc,
+                        img: img,
+                    }
+                    fetch('http://localhost:5000/blog', {
+                        method: "POST",
+                        headers: {
+                            'content-type': "application/json",
+                            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(blog)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            console.log(result)
+                            if (result.success) {
+                                toast(`Successfully blog added.Thank you...`);
+                                reset();
+                            }
+                        })
                 }
             })
     }
 
     return (
-        <div>
-            <h2>Add</h2>
-            <form
-                onSubmit={handleAdd}
-                className='grid grid-cols-1 gap-3 justify-items-center mt-2'>
+        <div className='flex justify-center items-center'>
+            <form onSubmit={handleSubmit(onSubmit)}>
 
-                <input type="text" name="title" placeholder='Title' className="input input-bordered w-full max-w-xs" />
-                <input type="text" name="slug" placeholder='Slug' className="input input-bordered w-full max-w-xs" />
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Title</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Title"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("title", {
+                            required: {
+                                value: true,
+                                message: 'Title is Required'
+                            }
+                        })}
+                    />
+                    <label className="label">
+                        {errors.title?.type === 'required' && <span className="label-text-alt text-red-500">{errors.title.message}</span>}
+                    </label>
+                </div>
 
-                <input type="text" name="blog1" placeholder="First Block"
-                    className="input input-bordered w-full max-w-xs" />
-                <input type="text" name="blog2" placeholder="Second Block"
-                    className="input input-bordered w-full max-w-xs" />
-                <input type="text" name="blog3" placeholder="Third Block"
-                    className="input input-bordered w-full max-w-xs" />
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Slug</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Slug"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("slug", {
+                            required: {
+                                value: true,
+                                message: 'Slug is Required'
+                            }
+                        })}
+                    />
+                    <label className="label">
+                        {errors.slug?.type === 'required' && <span className="label-text-alt text-red-500">{errors.slug.message}</span>}
+                    </label>
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Blog1</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="First Blog"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("blog1", {
+                            required: {
+                                value: true,
+                            }
+                        })}
+                    />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Blog2</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Secong Blog"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("blog2", {
+                            required: {
+                                value: true,
+                            }
+                        })}
+                    />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Blog3</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Third Blog"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("blog3", {
+                            required: {
+                                value: true,
+                            }
+                        })}
+                    />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Documentation Link</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Documentation link"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("doc", {
+                            required: {
+                                value: true,
+                            }
+                        })}
+                    />
+                </div>
 
-                <input type="submit" value="Add Blog" className="btn btn-secondary w-full max-w-xs" />
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">Image</span>
+                    </label>
+                    <input
+                        type="file"
+                        placeholder="Image"
+                        className="input input-bordered w-full max-w-xs"
+                        {...register("image", {
+                            required: {
+                                value: true,
+                                message: 'Image is Required'
+                            }
+                        })}
+                    />
+                    <label className="label">
+                        {errors.image?.type === 'required' && <span className="label-text-alt text-red-500">{errors.image.message}</span>}
+                    </label>
+                </div>
+
+                <input className='btn w-full max-w-xs text-white' type="submit" value="Add Blog" />
             </form>
         </div>
     );
