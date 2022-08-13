@@ -36,7 +36,7 @@ const AddBlog = () => {
                         doc: data.doc,
                         img: img,
                     }
-                    fetch('http://localhost:5000/blog', {
+                    fetch('https://glacial-mesa-67623.herokuapp.com/blog', {
                         method: "POST",
                         headers: {
                             'content-type': "application/json",
@@ -46,7 +46,6 @@ const AddBlog = () => {
                     })
                         .then(res => res.json())
                         .then(result => {
-                            console.log(result)
                             if (result.success) {
                                 toast(`Successfully blog added.Thank you...`);
                                 reset();

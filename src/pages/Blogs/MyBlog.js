@@ -9,7 +9,7 @@ const MyBlog = () => {
     const [blogs, setBlogs] = useState([]);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/blog/email?user_id=${user.email}`, {
+            fetch(`https://glacial-mesa-67623.herokuapp.com/blog/email?user_id=${user.email}`, {
                 method: 'GET',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -21,11 +21,9 @@ const MyBlog = () => {
     }, [user]);
 
     const handleDelete = _id => {
-        console.log('delete', _id);
         const proceed = window.confirm('Are you sure want to delete');
         if (proceed) {
-            const url = `http://localhost:5000/blog/${_id}`;
-            console.log('url from', url);
+            const url = `https://glacial-mesa-67623.herokuapp.com/blog/${_id}`;
             fetch(url, {
                 method: 'DELETE'
             })
@@ -47,8 +45,8 @@ const MyBlog = () => {
         <div>
             <h2 className='text-3xl text-primary font-bold'>My Blog: {blogs.length}</h2>
             {
-                blogs.map(blog => <>
-
+                blogs.map(blog => <div key={blog._id}>
+                    
                     <div className='m-3 p-3'>
                         <div className="hero min-h-screen bg-base-200">
                             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -68,7 +66,7 @@ const MyBlog = () => {
                             </div>
                         </div>
                     </div>
-                </>
+                </div>
                 )
             }
         </div>

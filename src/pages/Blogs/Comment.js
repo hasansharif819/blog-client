@@ -1,16 +1,10 @@
 import React from 'react';
 
 const Comment = ({ comment }) => {
-    const { reviews, clientName } = comment;
+    const { reviews, clientName, userImage } = comment;
     return (
-        <div className="collapse my-2 font-bold text-2xl">
-            <input type="checkbox" className="peer" />
-            <div className="collapse-title bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
-                {reviews}
-            </div>
-            <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
-                <p>{clientName}</p>
-            </div>
+        <div>
+            <p className=''><img className='rounded-2xl' height={20} width={20} src={userImage} alt="" /> {clientName} <span className='ms-5'>-- {reviews}</span></p>
         </div>
     );
 };

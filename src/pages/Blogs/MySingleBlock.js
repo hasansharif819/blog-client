@@ -7,7 +7,7 @@
 //         console.log('delete', _id);
 //         const proceed = window.confirm('Are you sure want to delete');
 //         if(proceed){
-//             const url = `http://localhost:5000/blog/${_id}`;
+//             const url = `https://glacial-mesa-67623.herokuapp.com/blog/${_id}`;
 //             console.log('url from', url);
 //             fetch(url, {
 //                 method: 'DELETE'
